@@ -23,6 +23,7 @@ hs_err_pid*
 
 # Intellij IDEA files
 .idea/
+*.iml
 
 ### Gradle ###
 .gradle

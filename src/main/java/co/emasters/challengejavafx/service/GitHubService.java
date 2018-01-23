@@ -1,10 +1,7 @@
-package co.emasters.challengejavafx.github;
+package co.emasters.challengejavafx.service;
 
 import co.emasters.challengejavafx.model.GitHubPullRequest;
 import co.emasters.challengejavafx.model.GitHubRepoPage;
-import com.google.gson.Gson;
-import com.google.gson.JsonArray;
-import com.google.gson.JsonObject;
 import java.util.List;
 import retrofit2.Call;
 import retrofit2.http.GET;
