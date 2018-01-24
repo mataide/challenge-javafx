@@ -6,6 +6,7 @@ import co.emasters.challengejavafx.model.GitHubPullRequest;
 import co.emasters.challengejavafx.model.GitHubRepoPage;
 import co.emasters.challengejavafx.model.GitHubRepository;
 import co.emasters.challengejavafx.service.GitHubService;
+import co.emasters.challengejavafx.service.QueryService;
 import co.emasters.challengejavafx.utils.Constants;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXListView;
@@ -48,6 +49,8 @@ public class AppController {
   private JFXButton loadMoreBtn;
   @FXML
   private Label titleLabel;
+
+  private final QueryService queryService = new QueryService();
 
   private Integer pageNumber = 1;
 
@@ -96,47 +99,6 @@ public class AppController {
     return prList;
   }
 
-  private List<GitHubPullRequest> loadPullRequests(String owner, String repository) {
-
-    Retrofit retrofit = new Retrofit.Builder()
-        .baseUrl("https://api.github.com/")
-        .addConverterFactory(GsonConverterFactory.create())
-        .build();
-
-    GitHubService service = retrofit.create(GitHubService.class);
-    Call<List<GitHubPullRequest>> call = service.listPullRequests(owner, repository);
-    try {
-      Response<List<GitHubPullRequest>> execute = call.execute();
-      if (execute.isSuccessful()) {
-        return execute.body();
-      }
-    } catch (IOException e) {
-      e.printStackTrace();
-    }
-    return new ArrayList<>();
-  }
-
-  private List<GitHubRepository> loadRepositories() {
-
-    Retrofit retrofit = new Retrofit.Builder()
-        .baseUrl("https://api.github.com/")
-        .addConverterFactory(GsonConverterFactory.create())
-        .build();
-
-    GitHubService service = retrofit.create(GitHubService.class);
-    Call<GitHubRepoPage> call = service.listRepos("language:Java", "stars", pageNumber, 7);
-    try {
-      Response<GitHubRepoPage> execute = call.execute();
-      if (execute.isSuccessful()) {
-        GitHubRepoPage page = execute.body();
-        return page.getItems();
-      }
-    } catch (IOException e) {
-      e.printStackTrace();
-    }
-    return new ArrayList<>();
-  }
-
   @FXML
   private void loadMore() {
     loadMoreBtn.setText("LOADING ...");
@@ -156,6 +118,7 @@ public class AppController {
 
   @FXML
   private void exit() {
+    queryService.shutdownDatabase();
     System.exit(0);
   }
 
@@ -164,7 +127,7 @@ public class AppController {
     ProgressIndicator progressIndicator = getProgress();
 
     Runnable runnable = () -> {
-      List<GitHubRepository> repositories = loadRepositories();
+      List<GitHubRepository> repositories = queryService.retrieveStarredJavaRepositories(pageNumber);
       List<RepoListItem> items = createRepositoryList(repositories);
       Platform.runLater(
           () -> {
@@ -195,7 +158,7 @@ public class AppController {
     titleLabel.setText("List of Pull Requests for: " + r.getFull_name());
 
     Runnable runnable = () -> {
-      List<GitHubPullRequest> requests = loadPullRequests(r.getOwner().getLogin(), r.getName());
+      List<GitHubPullRequest> requests = queryService.retrievePullRequestsFromRepository(r.getOwner().getLogin(), r.getName());
       List<PRListItem> listItems = createPRList(requests);
       Platform.runLater(
           () -> {
