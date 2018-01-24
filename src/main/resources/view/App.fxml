@@ -21,11 +21,11 @@
              <children>
                <Pane prefHeight="230.4" prefWidth="170.0">
                  <children>
-                   <ImageView fitHeight="25.0" fitWidth="142.0" layoutX="14.0" layoutY="29.0">
+                   <ImageView layoutX="14.0" layoutY="29.0">
                      <cursor>
                        <Cursor fx:constant="HAND"/>
                      </cursor>
-                     <Image url="@../img/emasters.png"/>
+                     <Image url="@../img/logo.png"/>
                    </ImageView>
                  </children>
                </Pane>
