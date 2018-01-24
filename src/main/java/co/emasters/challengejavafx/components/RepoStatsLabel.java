@@ -1,5 +1,6 @@
 package co.emasters.challengejavafx.components;
 
+import co.emasters.challengejavafx.utils.Constants;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
 import javafx.scene.control.Label;
@@ -16,8 +17,6 @@ import javafx.scene.text.TextAlignment;
  */
 public class RepoStatsLabel extends Label {
 
-  private static final Paint DARK_ORANGE = Paint.valueOf(Color.DARKORANGE.toString());
-
   /**
    * Creates Label with supplied text.
    *
@@ -27,12 +26,12 @@ public class RepoStatsLabel extends Label {
     super(text);
 
     FontAwesomeIconView view = new FontAwesomeIconView(icon);
-    view.setFill(DARK_ORANGE);
+    view.setFill(Constants.DARK_ORANGE);
 
     this.setGraphic(view);
     this.setGraphicTextGap(10);
     this.setFont(Font.font("Roboto Bold"));
-    this.setTextFill(DARK_ORANGE);
+    this.setTextFill(Constants.DARK_ORANGE);
     this.setTextAlignment(TextAlignment.CENTER);
   }
 }
