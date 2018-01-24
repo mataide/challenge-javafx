@@ -14,7 +14,7 @@ import javafx.scene.text.TextAlignment;
  * author: Olavo.
  * version: 0.1
  */
-class RepoStatsLabel extends Label {
+public class RepoStatsLabel extends Label {
 
   private static final Paint DARK_ORANGE = Paint.valueOf(Color.DARKORANGE.toString());
 
@@ -23,7 +23,7 @@ class RepoStatsLabel extends Label {
    *
    * @param text null text is treated as the empty string
    */
-  RepoStatsLabel(String text, FontAwesomeIcon icon) {
+  public RepoStatsLabel(String text, FontAwesomeIcon icon) {
     super(text);
 
     FontAwesomeIconView view = new FontAwesomeIconView(icon);

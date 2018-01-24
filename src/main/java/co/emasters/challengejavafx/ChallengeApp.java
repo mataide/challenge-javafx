@@ -18,12 +18,12 @@ public class ChallengeApp extends Application {
   @Override
   public void start(Stage stage) throws Exception {
 
-    Parent root = FXMLLoader.load(getClass().getResource("/view/RepoList.fxml"));
+    Parent root = FXMLLoader.load(getClass().getResource("/view/App.fxml"));
 
     Scene scene = new Scene(root);
     scene.getStylesheets().add(getClass().getResource("/css/jfxcomponents.css").toExternalForm());
 
-    stage.initStyle(StageStyle.UTILITY);
+    stage.initStyle(StageStyle.UNDECORATED);
     stage.setScene(scene);
     stage.setResizable(false);
     stage.show();

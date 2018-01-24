@@ -18,7 +18,7 @@ public interface GitHubService {
 
   @GET("/search/repositories")
   Call<GitHubRepoPage> listRepos(@Query("q") String language, @Query("sort") String sort,
-      @Query("page") Integer page);
+      @Query("page") Integer page, @Query("per_page") Integer perPage);
 
   @GET("/repos/{owner}/{repository}/pulls")
   Call<List<GitHubPullRequest>> listPullRequests(@Path("owner") String owner, @Path("repository") String repository);

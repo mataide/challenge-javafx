@@ -2,21 +2,18 @@
 
 <?import com.jfoenix.controls.JFXButton?>
 <?import com.jfoenix.controls.JFXListView?>
-<?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.Cursor?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
-<?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.FlowPane?>
-<?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
-<?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<?import javafx.scene.shape.Circle?>
-<HBox prefHeight="768.0" prefWidth="1024.0" xmlns="http://javafx.com/javafx/8.0.112" xmlns:fx="http://javafx.com/fxml/1" fx:controller="co.emasters.challengejavafx.controller.RepoListController">
+<?import javafx.scene.control.ProgressIndicator?>
+<HBox prefHeight="768.0" prefWidth="1024.0" xmlns="http://javafx.com/javafx/8.0.112" xmlns:fx="http://javafx.com/fxml/1" fx:controller="co.emasters.challengejavafx.controller.AppController">
      <children>
        <VBox prefHeight="768.0" prefWidth="170.0">
          <children>
@@ -61,9 +58,10 @@
                  </Label>
                </children>
              </FlowPane>
-             <Pane layoutX="170.0" prefHeight="708.0" prefWidth="854.0" style="-fx-background-color: whitesmoke">
+             <Pane fx:id="paneList" layoutX="170.0" prefHeight="708.0" prefWidth="854.0" style="-fx-background-color: whitesmoke">
                <children>
-                 <JFXListView fx:id="repoList" minHeight="708.0" minWidth="854.0"/>
+                 <JFXListView fx:id="repoList" minHeight="708.0" minWidth="854.0" style="-fx-cursor: hand"/>
+                 <JFXListView fx:id="prList" minHeight="708.0" minWidth="854.0" style="-fx-cursor: hand" visible="false"/>
                   <!--<GridPane prefHeight="100.0" prefWidth="854.0">-->
                     <!--<columnConstraints>-->
                       <!--<ColumnConstraints hgrow="SOMETIMES" percentWidth="5.0" />-->

@@ -16,13 +16,13 @@ import javafx.scene.text.Font;
  * author: Olavo.
  * version: 0.1
  */
-class AuthorVBox extends VBox {
+public class AuthorVBox extends VBox {
 
   private static final Integer IMAGE_SIZE = 60;
 
   private GitHubAuthor author;
 
-  AuthorVBox(GitHubAuthor author) {
+  public AuthorVBox(GitHubAuthor author) {
     super();
     this.author = author;
     this.setAlignment(Pos.CENTER);
@@ -34,7 +34,6 @@ class AuthorVBox extends VBox {
   private void configureImage(){
     //creates an image with size 60 pixels
     String url = getFixedSizeURL();
-    System.out.println(url);
     Image myImage = new Image(url);
     Circle circle = new Circle(IMAGE_SIZE/2);
     ImagePattern pattern = new ImagePattern(myImage);
