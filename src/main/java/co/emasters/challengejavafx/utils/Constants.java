@@ -15,5 +15,6 @@ public class Constants {
   public static final Paint DARK_CYAN = Paint.valueOf(Color.DARKCYAN.toString());
   public static final Paint DARK_ORANGE = Paint.valueOf(Color.DARKORANGE.toString());
   public static final Paint LIGHT_GREY = Paint.valueOf("#757575");
+  public static final Paint WHITE = Paint.valueOf(Color.WHITE.toString());
 
 }
