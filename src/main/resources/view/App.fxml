@@ -6,13 +6,13 @@
 <?import javafx.scene.Cursor?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
-<?import javafx.scene.layout.FlowPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
-
-<?import javafx.scene.control.Button?>
 <HBox prefHeight="768.0" prefWidth="1024.0" xmlns="http://javafx.com/javafx/8.0.112" xmlns:fx="http://javafx.com/fxml/1" fx:controller="co.emasters.challengejavafx.controller.AppController">
      <children>
        <VBox prefHeight="768.0" prefWidth="170.0">
@@ -40,7 +40,7 @@
                </Pane>
                <Pane prefHeight="153.6" prefWidth="170.0">
                  <children>
-                   <JFXButton alignment="CENTER" buttonType="RAISED" layoutX="45.0" layoutY="65.0" onAction="#exit" prefHeight="25.0" prefWidth="80.0" style="-fx-background-color: #F5F5F5;" text="SAIR" textAlignment="CENTER" />
+                   <JFXButton alignment="CENTER" buttonType="RAISED" layoutX="45.0" layoutY="65.0" onAction="#exit" prefHeight="25.0" prefWidth="80.0" style="-fx-background-color: #F5F5F5;" text="EXIT" textAlignment="CENTER" />
                  </children>
                </Pane>
              </children>
@@ -49,16 +49,25 @@
        </VBox>
        <VBox prefHeight="768.0" prefWidth="854.0" style="-fx-background-color: #616161;">
            <children>
-             <FlowPane alignment="CENTER_LEFT" layoutX="170.0" prefHeight="60.0" prefWidth="854.0">
+             <GridPane alignment="CENTER_LEFT" layoutX="170.0" prefHeight="60.0" prefWidth="854.0">
+               <columnConstraints>
+                 <ColumnConstraints percentWidth="5"/>
+                 <ColumnConstraints percentWidth="75"/>
+                 <ColumnConstraints percentWidth="20"/>
+               </columnConstraints>
+               <rowConstraints>
+                 <RowConstraints percentHeight="100"/>
+               </rowConstraints>
                <children>
-                 <JFXButton fx:id="goBackButton" alignment="CENTER" buttonType="FLAT" visible="false" textAlignment="CENTER" onAction="#backToRepoList"/>
-                 <Label fx:id="titleLabel" text="List of Popular Java Repositories" textFill="WHITE">
+                 <JFXButton fx:id="goBackBtn" alignment="CENTER" buttonType="FLAT" visible="false" textAlignment="CENTER" onAction="#backToRepoList" GridPane.columnIndex="0" GridPane.rowIndex="0"/>
+                 <Label fx:id="titleLabel" text="List of Popular Java Repositories" textFill="WHITE" GridPane.columnIndex="1" GridPane.rowIndex="0">
                    <font>
                      <Font name="Roboto Bold" size="14.0" />
                    </font>
                  </Label>
+                 <JFXButton fx:id="loadMoreBtn" alignment="CENTER" buttonType="RAISED" layoutX="700" onAction="#loadMore" prefHeight="25.0" prefWidth="130.0" style="-fx-background-color: #F5F5F5;" text="LOAD MORE" textAlignment="CENTER" visible="false" GridPane.columnIndex="2" GridPane.rowIndex="0"/>
                </children>
-             </FlowPane>
+             </GridPane>
              <Pane fx:id="paneList" layoutX="170.0" prefHeight="708.0" prefWidth="854.0" style="-fx-background-color: whitesmoke">
                <children>
                  <JFXListView fx:id="repoList" minHeight="708.0" minWidth="854.0" style="-fx-cursor: hand"/>

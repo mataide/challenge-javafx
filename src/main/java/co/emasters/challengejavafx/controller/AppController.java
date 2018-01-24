@@ -43,7 +43,9 @@ public class AppController {
   @FXML
   private Pane paneList;
   @FXML
-  private JFXButton goBackButton;
+  private JFXButton goBackBtn;
+  @FXML
+  private JFXButton loadMoreBtn;
   @FXML
   private Label titleLabel;
 
@@ -52,24 +54,27 @@ public class AppController {
   public void initialize() {
 
     FontAwesomeIconView view = new FontAwesomeIconView(FontAwesomeIcon.ARROW_LEFT);
+    view.setScaleX(1.5);
+    view.setScaleY(1.5);
     view.setFill(Constants.WHITE);
-    goBackButton.setGraphic(view);
+    goBackBtn.setGraphic(view);
 
 
     repoList.getStyleClass().add("mylistview");
 
-    final ProgressIndicator progressIndicator = new ProgressIndicator();
+    ProgressIndicator progressIndicator = new ProgressIndicator();
     progressIndicator.setLayoutX(400.0);
     progressIndicator.setLayoutY(10.0);
+    progressIndicator.setVisible(true);
     paneList.getChildren().add(progressIndicator);
-    this.loadRepoItems(progressIndicator);
+    this.loadRepoItems();
   }
 
-  private List<RepoListItem> createRepositoryList(List<GitHubRepository> items, final ProgressIndicator progressIndicator) {
+  private List<RepoListItem> createRepositoryList(List<GitHubRepository> items) {
     List<RepoListItem> repoListItems = new ArrayList<>();
     for (GitHubRepository r : items) {
       RepoListItem listItem = new RepoListItem(r);
-      listItem.setOnMouseClicked(t -> loadPRItems(progressIndicator, r));
+      listItem.setOnMouseClicked(t -> loadPRItems(r));
       repoListItems.add(listItem);
     }
     return repoListItems;
@@ -134,20 +139,19 @@ public class AppController {
 
   @FXML
   private void loadMore() {
-    final ProgressIndicator progressIndicator = (ProgressIndicator) paneList.getChildren().get(1);
-    if(!progressIndicator.isVisible()){
-      System.out.println("load more");
-      pageNumber++;
-      this.loadRepoItems(progressIndicator);
-    }
+    loadMoreBtn.setText("LOADING ...");
+    loadMoreBtn.setDisable(true);
+    pageNumber++;
+    this.loadRepoItems();
   }
 
   @FXML
   private void backToRepoList(){
-    goBackButton.setVisible(false);
+    goBackBtn.setVisible(false);
     repoList.setVisible(true);
     prList.setVisible(false);
     titleLabel.setText("List of Popular Java Repositories");
+    loadMoreBtn.setVisible(true);
   }
 
   @FXML
@@ -155,17 +159,22 @@ public class AppController {
     System.exit(0);
   }
 
-  private void loadRepoItems(final ProgressIndicator progressIndicator) {
+  private void loadRepoItems() {
     // start displaying the loading indicator at the Application Thread
-    progressIndicator.setVisible(true);
+    ProgressIndicator progressIndicator = getProgress();
 
     Runnable runnable = () -> {
       List<GitHubRepository> repositories = loadRepositories();
-      List<RepoListItem> items = createRepositoryList(repositories, progressIndicator);
+      List<RepoListItem> items = createRepositoryList(repositories);
       Platform.runLater(
           () -> {
             repoList.getItems().addAll(items);
             progressIndicator.setVisible(false);
+            loadMoreBtn.setVisible(true);
+            if(loadMoreBtn.isDisable()){
+              loadMoreBtn.setText("LOAD MORE");
+              loadMoreBtn.setDisable(false);
+            }
           }
       );
     };
@@ -175,12 +184,14 @@ public class AppController {
     thread.start();
   }
 
-  private void loadPRItems(final ProgressIndicator progressIndicator, GitHubRepository r) {
+  private void loadPRItems(GitHubRepository r) {
     // start displaying the loading indicator at the Application Thread
+    ProgressIndicator progressIndicator = getProgress();
     progressIndicator.setVisible(true);
     repoList.setVisible(false);
-    goBackButton.setVisible(true);
+    goBackBtn.setVisible(true);
     prList.getItems().clear();
+    loadMoreBtn.setVisible(false);
     titleLabel.setText("List of Pull Requests for: " + r.getFull_name());
 
     Runnable runnable = () -> {
@@ -198,5 +209,9 @@ public class AppController {
     Thread thread = new Thread(runnable);
     thread.setDaemon(true);
     thread.start();
+  }
+
+  private ProgressIndicator getProgress(){
+    return (ProgressIndicator) paneList.getChildren().get(2);
   }
 }
