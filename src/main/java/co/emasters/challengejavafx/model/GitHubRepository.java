@@ -1,9 +1,9 @@
 package co.emasters.challengejavafx.model;
 
 /**
- * Class description here.
+ * Model class for GitHub repositories.
  *
- * author: Olavo.
+ * author: Olavo Holanda
  * version: 0.1
  */
 public class GitHubRepository {

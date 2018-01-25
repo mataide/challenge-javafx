@@ -4,9 +4,9 @@ import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 
 /**
- * Class description here.
+ * Constants class for the UI.
  *
- * author: Olavo.
+ * author: Olavo Holanda
  * version: 0.1
  */
 public class Constants {

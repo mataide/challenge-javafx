@@ -7,19 +7,23 @@ import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.service.ServiceRegistry;
 
 /**
- * Class description here.
+ * Hibernate utils class for Hibernate session management.
  *
- * author: Olavo.
+ * author: Olavo Holanda
  * version: 0.1
  */
 public class HibernateUtils {
 
   private static final SessionFactory sessionFactory = buildSessionFactory();
 
-  // Hibernate 5:
+  /**
+   * Builds Hibernate session factory based on hibernate config xml file.
+   *
+   * @return a <code>SessionFactory</code>
+   */
   private static SessionFactory buildSessionFactory() {
     try {
-      // Create the ServiceRegistry from hibernate.cfg.xml.xml
+      // Create the ServiceRegistry from hibernate.cfg.xml
       ServiceRegistry serviceRegistry = new StandardServiceRegistryBuilder()
           .configure("hibernate.cfg.xml").build();
 
@@ -34,12 +38,19 @@ public class HibernateUtils {
     }
   }
 
+  /**
+   * Retrieves current session factory.
+   *
+   * @return a <code>SessionFactory</code>
+   */
   public static SessionFactory getSessionFactory() {
     return sessionFactory;
   }
 
+  /**
+   * Close caches and connection pools.
+   */
   public static void shutdown() {
-    // Close caches and connection pools
     getSessionFactory().close();
   }
 

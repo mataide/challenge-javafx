@@ -3,9 +3,7 @@ package co.emasters.challengejavafx.controller;
 import co.emasters.challengejavafx.components.list.PRListItem;
 import co.emasters.challengejavafx.components.list.RepoListItem;
 import co.emasters.challengejavafx.model.GitHubPullRequest;
-import co.emasters.challengejavafx.model.GitHubRepoPage;
 import co.emasters.challengejavafx.model.GitHubRepository;
-import co.emasters.challengejavafx.service.GitHubService;
 import co.emasters.challengejavafx.service.QueryService;
 import co.emasters.challengejavafx.utils.Constants;
 import com.jfoenix.controls.JFXButton;
@@ -24,10 +22,6 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ProgressIndicator;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
-import retrofit2.Call;
-import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
 
 /**
  * Class description here.

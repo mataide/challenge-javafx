@@ -63,8 +63,8 @@ public class QueryService {
   }
 
   /**
-   * Retrieve all pull requests from a GitHub repository. First, it checks if this results is already
-   * cached on internal database, if not, calls GitHub API.
+   * Retrieve all pull requests from a GitHub repository. First, it checks if this results is
+   * already cached on internal database, if not, calls GitHub API.
    *
    * @param owner string login of the repository owner
    * @param repository string name of the repository
@@ -72,18 +72,78 @@ public class QueryService {
    */
   public List<GitHubPullRequest> retrievePullRequestsFromRepository(String owner,
       String repository) {
-    List<GitHubPullRequest> requests = loadPullRequestCache(owner + "/" + repository);
-    if(requests.isEmpty()){
+    List<GitHubPullRequest> requests = loadPullRequestCache(owner, repository);
+    if (requests.isEmpty()) {
       requests = loadPullRequestsFromGitHub(owner, repository);
       savePullRequestsOnCache(requests);
     }
     return requests;
   }
 
-  private void savePullRequestsOnCache(List<GitHubPullRequest> requests){
+  /**
+   * Load all pull requests saved on database with repoId containing the owner and repository
+   * name.
+   *
+   * @param owner string login of the repository owner
+   * @param repository string name of the repository
+   * @return a list of <code>GitHubPullRequest</code>
+   */
+  private List<GitHubPullRequest> loadPullRequestCache(String owner, String repository) {
 
-    System.out.println("Saving requests...");
+    String repoId = owner + "/" + repository;
 
+    List<GitHubPullRequest> prs = new ArrayList<>();
+
+    SessionFactory factory = HibernateUtils.getSessionFactory();
+    Session session = factory.getCurrentSession();
+    try {
+      session.getTransaction().begin();
+
+      String sql = "SELECT pr FROM " + GitHubPullRequest.class.getName() + " pr "
+          + " WHERE pr.repoId = '" + repoId + "'";
+
+      Query<GitHubPullRequest> query = session.createQuery(sql, GitHubPullRequest.class);
+      prs = query.getResultList();
+
+      session.getTransaction().commit();
+    } catch (Exception e) {
+      e.printStackTrace();
+      session.getTransaction().rollback();
+    }
+
+    return prs;
+  }
+
+  /**
+   * Load all pull requests of a GitHub repository from its API.
+   *
+   * @param owner string login of the repository owner
+   * @param repository string name of the repository
+   * @return a list of <code>GitHubPullRequest</code>
+   */
+  private List<GitHubPullRequest> loadPullRequestsFromGitHub(String owner, String repository) {
+    Call<List<GitHubPullRequest>> call = gitHubService.listPullRequests(owner, repository);
+    try {
+      Response<List<GitHubPullRequest>> execute = call.execute();
+      if (execute.isSuccessful()) {
+        List<GitHubPullRequest> requests = execute.body();
+        if (requests != null) {
+          requests.forEach(p -> p.setRepoId(owner + "/" + repository));
+          return requests;
+        }
+      }
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
+    return new ArrayList<>();
+  }
+
+  /**
+   * Saves a list of pull requests on internal database.
+   *
+   * @param requests a list of <code>GitHubPullRequest</code> to save on database
+   */
+  private void savePullRequestsOnCache(List<GitHubPullRequest> requests) {
     SessionFactory factory = HibernateUtils.getSessionFactory();
     Session session = factory.getCurrentSession();
     try {
@@ -96,66 +156,12 @@ public class QueryService {
       e.printStackTrace();
       session.getTransaction().rollback();
     }
-
-    System.out.println("Saved: " + requests.size());
-
-  }
-
-  private List<GitHubPullRequest> loadPullRequestCache(String repoId) {
-
-    List<GitHubPullRequest> prs = new ArrayList<>();
-
-    SessionFactory factory = HibernateUtils.getSessionFactory();
-    Session session = factory.getCurrentSession();
-    try {
-      session.getTransaction().begin();
-
-      String sql = "SELECT pr FROM " + GitHubPullRequest.class.getName() + " pr "
-          + " WHERE pr.repoId = '" + repoId + "'";
-
-      Query<GitHubPullRequest> query = session.createQuery(sql);
-      prs = query.getResultList();
-
-      session.getTransaction().commit();
-    } catch (Exception e) {
-      e.printStackTrace();
-      session.getTransaction().rollback();
-    }
-
-    System.out.println("loaded requests from cache:" + repoId);
-
-    return prs;
-  }
-
-  /**
-   * Load all pull requests of a GitHub repository from its API.
-   *
-   * @param owner string login of the repository owner
-   * @param repository string name of the repository
-   * @return a list of <code>GitHubPullRequest</code>
-   */
-  private List<GitHubPullRequest> loadPullRequestsFromGitHub(String owner, String repository){
-    Call<List<GitHubPullRequest>> call = gitHubService.listPullRequests(owner, repository);
-    try {
-      Response<List<GitHubPullRequest>> execute = call.execute();
-      if (execute.isSuccessful()) {
-        List<GitHubPullRequest> requests = execute.body();
-        System.out.println("loaded requests from api:" + repository);
-        if(requests != null) {
-          requests.forEach(p -> p.setRepoId(owner + "/" + repository));
-          return requests;
-        }
-      }
-    } catch (IOException e) {
-      e.printStackTrace();
-    }
-    return new ArrayList<>();
   }
 
   /**
    * Shutdowns the current hibernate session and database connection.
    */
-  public void shutdownDatabase(){
+  public void shutdownDatabase() {
     HibernateUtils.shutdown();
   }
 }

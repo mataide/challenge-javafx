@@ -3,9 +3,10 @@ package co.emasters.challengejavafx.model;
 import java.util.List;
 
 /**
- * Class description here.
+ * Model class for a GitHub repository page, it contains the total number of repositories in
+ * a particular query and the contents of that pagination.
  *
- * author: Olavo.
+ * author: Olavo Holanda
  * version: 0.1
  */
 public class GitHubRepoPage {

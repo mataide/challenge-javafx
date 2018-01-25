@@ -10,9 +10,9 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 
 /**
- * Class description here.
+ * Model and entity class for GitHub pull requests.
  *
- * author: Olavo.
+ * author: Olavo Holanda
  * version: 0.1
  */
 @Entity
