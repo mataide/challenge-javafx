@@ -52,6 +52,7 @@
 }
 
 .jfx-list-cell {
+  -fx-cursor: hand;
   -fx-background-insets: 0.0 ;
   -fx-text-fill: BLACK;
 }
@@ -67,10 +68,15 @@
 }
 
 .jfx-list-view {
+  -fx-cursor: hand;
   -fx-background-insets: 0;
   -fx-cell-horizontal-margin: 0.0;
   -fx-cell-vertical-margin: 5.0;
   -fx-vertical-gap : 10;
   -fx-expanded : false;
   -fx-pref-width:200;
+}
+
+.jfx-button {
+  -fx-cursor: hand;
 }
