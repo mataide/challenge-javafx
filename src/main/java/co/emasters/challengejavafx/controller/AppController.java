@@ -63,7 +63,7 @@ public class AppController {
     goBackBtn.setGraphic(view);
 
 
-    repoList.getStyleClass().add("mylistview");
+    repoList.getStyleClass().add("repo-list");
 
     CustomLoader customLoader = new CustomLoader();
     paneList.getChildren().add(customLoader);
