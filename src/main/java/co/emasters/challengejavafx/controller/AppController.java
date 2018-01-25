@@ -213,4 +213,20 @@ public class AppController {
   private CustomLoader getLoader(){
     return (CustomLoader) paneList.getChildren().get(2);
   }
+
+  public JFXButton getGoBackBtn() {
+    return goBackBtn;
+  }
+
+  public JFXButton getLoadMoreBtn() {
+    return loadMoreBtn;
+  }
+
+  public JFXListView<GridPane> getRepoList() {
+    return repoList;
+  }
+
+  public JFXListView<GridPane> getPrList() {
+    return prList;
+  }
 }
