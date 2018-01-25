@@ -31,10 +31,18 @@ import javafx.scene.layout.Pane;
  */
 public class AppController {
 
+  /** ----- STATIC FINAL VARIABLES ----- */
+  private static final String LOAD_TITLE = "LOAD MORE";
+  private static final String LOADING_TITLE = "LOADING...";
+  private static final String PR_TILE = "List of Pull Request for: ";
+  private static final String REPO_TILE = "List of Java Popular Repositories";
+  private static final String LIST_VIEW_CSS = "repo-list";
+
   /** ----- CLASS VARIABLES ----- */
   private final QueryService queryService = new QueryService();
   //controls the page number of repository list
   private Integer pageNumber = 1;
+
 
   /** ----- APPLICATION COMPONENTS ----- */
   @FXML
@@ -55,6 +63,7 @@ public class AppController {
    *
    * */
   public void initialize() {
+    repoList.getStyleClass().add(LIST_VIEW_CSS);
 
     FontAwesomeIconView view = new FontAwesomeIconView(FontAwesomeIcon.ARROW_LEFT);
     view.setScaleX(1.5);
@@ -62,14 +71,49 @@ public class AppController {
     view.setFill(Constants.WHITE);
     goBackBtn.setGraphic(view);
 
-
-    repoList.getStyleClass().add("repo-list");
-
     CustomLoader customLoader = new CustomLoader();
     paneList.getChildren().add(customLoader);
     this.loadRepoItems();
   }
 
+  /**
+   * Load more action for the load more button. Loads more repositories based on the current page
+   * number.
+   * */
+  @FXML
+  private void loadMore() {
+    loadMoreBtn.setText(LOADING_TITLE);
+    loadMoreBtn.setDisable(true);
+    pageNumber++;
+    this.loadRepoItems();
+  }
+
+  /**
+   * Go back action for the back to repository list button.
+   * */
+  @FXML
+  private void backToRepoList(){
+    goBackBtn.setVisible(false);
+    repoList.setVisible(true);
+    prList.setVisible(false);
+    titleLabel.setText(REPO_TILE);
+    loadMoreBtn.setVisible(true);
+  }
+
+  /**
+   * Exit action. Shutdowns the query service and exits the system.
+   * */
+  @FXML
+  private void exit() {
+    queryService.shutdownDatabase();
+    System.exit(0);
+  }
+
+  /**
+   * Creates a list of Repository Item components based on a list of GitHubRepository items.
+   *
+   * @param items a list of <code>GitHubRepository</code>
+   * */
   private List<RepoListItem> createRepositoryList(List<GitHubRepository> items) {
     List<RepoListItem> repoListItems = new ArrayList<>();
     for (GitHubRepository r : items) {
@@ -80,6 +124,11 @@ public class AppController {
     return repoListItems;
   }
 
+  /**
+   * Creates a list of PR Item components based on a list of GitHubPullRequest items.
+   *
+   * @param items a list of <code>GitHubPullRequest</code>
+   * */
   private List<PRListItem> createPRList(List<GitHubPullRequest> items) {
     List<PRListItem> prList = new ArrayList<>();
     for (GitHubPullRequest p : items) {
@@ -96,31 +145,11 @@ public class AppController {
     return prList;
   }
 
-  @FXML
-  private void loadMore() {
-    loadMoreBtn.setText("LOADING ...");
-    loadMoreBtn.setDisable(true);
-    pageNumber++;
-    this.loadRepoItems();
-  }
-
-  @FXML
-  private void backToRepoList(){
-    goBackBtn.setVisible(false);
-    repoList.setVisible(true);
-    prList.setVisible(false);
-    titleLabel.setText("List of Popular Java Repositories");
-    loadMoreBtn.setVisible(true);
-  }
-
-  @FXML
-  private void exit() {
-    queryService.shutdownDatabase();
-    System.exit(0);
-  }
-
+  /**
+   * Loads repository items on the UI. Executes as a thread so a custom loader progress indicator
+   * can notify the user that something is be loading in background.
+   * */
   private void loadRepoItems() {
-    // start displaying the loading indicator at the Application Thread
     CustomLoader customLoader = getLoader();
 
     Runnable runnable = () -> {
@@ -132,7 +161,7 @@ public class AppController {
             customLoader.setVisible(false);
             loadMoreBtn.setVisible(true);
             if(loadMoreBtn.isDisable()){
-              loadMoreBtn.setText("LOAD MORE");
+              loadMoreBtn.setText(LOAD_TITLE);
               loadMoreBtn.setDisable(false);
             }
           }
@@ -144,6 +173,12 @@ public class AppController {
     thread.start();
   }
 
+  /**
+   * Loads pull request items on the UI. Executes as a thread so a custom loader progress indicator
+   * can notify the user that something is be loading in background.
+   *
+   * @param r  a instance of GitHubRepository
+   * */
   private void loadPRItems(GitHubRepository r) {
     CustomLoader customLoader = getLoader();
     customLoader.setVisible(true);
@@ -151,7 +186,7 @@ public class AppController {
     goBackBtn.setVisible(true);
     prList.getItems().clear();
     loadMoreBtn.setVisible(false);
-    titleLabel.setText("List of Pull Requests for: " + r.getFull_name());
+    titleLabel.setText(PR_TILE + r.getFull_name());
 
     Runnable runnable = () -> {
       List<GitHubPullRequest> requests = queryService.retrievePullRequestsFromRepository(r.getOwner().getLogin(), r.getName());
@@ -170,6 +205,9 @@ public class AppController {
     thread.start();
   }
 
+  /**
+   * Gets the custom loader progress indicator from the UI.
+   * */
   private CustomLoader getLoader(){
     return (CustomLoader) paneList.getChildren().get(2);
   }
