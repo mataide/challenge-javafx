@@ -1,26 +1,26 @@
 package co.emasters.challengejavafx.components;
 
-import co.emasters.challengejavafx.utils.Constants;
+import co.emasters.challengejavafx.components.utils.Constants;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
 import javafx.scene.control.Label;
-import javafx.scene.paint.Color;
-import javafx.scene.paint.Paint;
-import javafx.scene.text.Font;
 import javafx.scene.text.TextAlignment;
 
 /**
- * Class description here.
+ * Custom label for repository stats.
  *
- * author: Olavo.
+ * author: Olavo Holanda
  * version: 0.1
  */
 public class RepoStatsLabel extends Label {
 
+  private static final Integer TEXT_GAP = 10;
+
   /**
-   * Creates Label with supplied text.
+   * Creates Label with supplied text and FontAwesomeIcon.
    *
-   * @param text null text is treated as the empty string
+   * @param text the label String
+   * @param icon the graphic FontAwesome icon
    */
   public RepoStatsLabel(String text, FontAwesomeIcon icon) {
     super(text);
@@ -29,8 +29,8 @@ public class RepoStatsLabel extends Label {
     view.setFill(Constants.DARK_ORANGE);
 
     this.setGraphic(view);
-    this.setGraphicTextGap(10);
-    this.setFont(Font.font("Roboto Bold"));
+    this.setGraphicTextGap(TEXT_GAP);
+    this.setFont(Constants.ROBOTO_BOLD);
     this.setTextFill(Constants.DARK_ORANGE);
     this.setTextAlignment(TextAlignment.CENTER);
   }

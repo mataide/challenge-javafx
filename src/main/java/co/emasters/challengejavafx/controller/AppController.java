@@ -1,11 +1,12 @@
 package co.emasters.challengejavafx.controller;
 
+import co.emasters.challengejavafx.components.CustomLoader;
 import co.emasters.challengejavafx.components.list.PRListItem;
 import co.emasters.challengejavafx.components.list.RepoListItem;
 import co.emasters.challengejavafx.model.GitHubPullRequest;
 import co.emasters.challengejavafx.model.GitHubRepository;
 import co.emasters.challengejavafx.service.QueryService;
-import co.emasters.challengejavafx.utils.Constants;
+import co.emasters.challengejavafx.components.utils.Constants;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXListView;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon;
@@ -19,18 +20,23 @@ import java.util.List;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
-import javafx.scene.control.ProgressIndicator;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 
 /**
- * Class description here.
+ * Controller class for the main view of the application.
  *
- * author: Olavo.
+ * author: Olavo Holanda
  * version: 0.1
  */
 public class AppController {
 
+  /** ----- CLASS VARIABLES ----- */
+  private final QueryService queryService = new QueryService();
+  //controls the page number of repository list
+  private Integer pageNumber = 1;
+
+  /** ----- APPLICATION COMPONENTS ----- */
   @FXML
   private JFXListView<GridPane> repoList;
   @FXML
@@ -44,10 +50,10 @@ public class AppController {
   @FXML
   private Label titleLabel;
 
-  private final QueryService queryService = new QueryService();
-
-  private Integer pageNumber = 1;
-
+  /**
+   * Initializes the controller once all components in the view were loaded
+   *
+   * */
   public void initialize() {
 
     FontAwesomeIconView view = new FontAwesomeIconView(FontAwesomeIcon.ARROW_LEFT);
@@ -59,11 +65,8 @@ public class AppController {
 
     repoList.getStyleClass().add("mylistview");
 
-    ProgressIndicator progressIndicator = new ProgressIndicator();
-    progressIndicator.setLayoutX(400.0);
-    progressIndicator.setLayoutY(10.0);
-    progressIndicator.setVisible(true);
-    paneList.getChildren().add(progressIndicator);
+    CustomLoader customLoader = new CustomLoader();
+    paneList.getChildren().add(customLoader);
     this.loadRepoItems();
   }
 
@@ -118,7 +121,7 @@ public class AppController {
 
   private void loadRepoItems() {
     // start displaying the loading indicator at the Application Thread
-    ProgressIndicator progressIndicator = getProgress();
+    CustomLoader customLoader = getLoader();
 
     Runnable runnable = () -> {
       List<GitHubRepository> repositories = queryService.retrieveStarredJavaRepositories(pageNumber);
@@ -126,7 +129,7 @@ public class AppController {
       Platform.runLater(
           () -> {
             repoList.getItems().addAll(items);
-            progressIndicator.setVisible(false);
+            customLoader.setVisible(false);
             loadMoreBtn.setVisible(true);
             if(loadMoreBtn.isDisable()){
               loadMoreBtn.setText("LOAD MORE");
@@ -142,9 +145,8 @@ public class AppController {
   }
 
   private void loadPRItems(GitHubRepository r) {
-    // start displaying the loading indicator at the Application Thread
-    ProgressIndicator progressIndicator = getProgress();
-    progressIndicator.setVisible(true);
+    CustomLoader customLoader = getLoader();
+    customLoader.setVisible(true);
     repoList.setVisible(false);
     goBackBtn.setVisible(true);
     prList.getItems().clear();
@@ -158,7 +160,7 @@ public class AppController {
           () -> {
             prList.getItems().addAll(listItems);
             prList.setVisible(true);
-            progressIndicator.setVisible(false);
+            customLoader.setVisible(false);
           }
       );
     };
@@ -168,7 +170,7 @@ public class AppController {
     thread.start();
   }
 
-  private ProgressIndicator getProgress(){
-    return (ProgressIndicator) paneList.getChildren().get(2);
+  private CustomLoader getLoader(){
+    return (CustomLoader) paneList.getChildren().get(2);
   }
 }

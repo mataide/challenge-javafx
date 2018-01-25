@@ -1,7 +1,8 @@
-package co.emasters.challengejavafx.utils;
+package co.emasters.challengejavafx.components.utils;
 
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
+import javafx.scene.text.Font;
 
 /**
  * Constants class for the UI.
@@ -16,5 +17,9 @@ public class Constants {
   public static final Paint DARK_ORANGE = Paint.valueOf(Color.DARKORANGE.toString());
   public static final Paint LIGHT_GREY = Paint.valueOf("#757575");
   public static final Paint WHITE = Paint.valueOf(Color.WHITE.toString());
+
+  /** ----- FONT CONSTANTS ----- */
+  public static final Font ROBOTO_BOLD = Font.font("Roboto Bold");
+  public static final Font ROBOTO = Font.font("Roboto");
 
 }

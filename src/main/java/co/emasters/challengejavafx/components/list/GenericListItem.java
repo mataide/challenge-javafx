@@ -5,19 +5,26 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.RowConstraints;
 
 /**
- * Class description here.
+ * The application uses the same base for GridPane to represent both a repository item as well as
+ * a pull request item. This abstract class extends GridPane and configures itself as this base.
  *
- * author: Olavo.
+ * author: Olavo Holanda
  * version: 0.1
  */
-class GenericListItem extends GridPane {
+abstract class GenericListItem extends GridPane {
 
+  /**
+   * Creates a GridPane layout with configured rows and columns.
+   */
   GenericListItem() {
     super();
     this.configureColumns();
     this.configureRows();
   }
 
+  /**
+   * Defines rows layout.
+   */
   private void configureRows() {
     RowConstraints firstConst = new RowConstraints();
     RowConstraints secondConst = new RowConstraints();
@@ -32,6 +39,9 @@ class GenericListItem extends GridPane {
     this.getRowConstraints().addAll(firstConst, secondConst, thirdConst, fourthConst);
   }
 
+  /**
+   * Defines column layout.
+   */
   private void configureColumns(){
     ColumnConstraints firstConst = new ColumnConstraints();
     ColumnConstraints secondConst = new ColumnConstraints();
