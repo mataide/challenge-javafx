@@ -22,6 +22,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
+import javafx.stage.Stage;
 
 /**
  * Controller class for the main view of the application.
@@ -105,8 +106,9 @@ public class AppController {
    * */
   @FXML
   private void exit() {
+    Stage stage = (Stage) paneList.getScene().getWindow();
+    stage.close();
     queryService.shutdownDatabase();
-    System.exit(0);
   }
 
   /**
