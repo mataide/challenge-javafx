@@ -1,4 +1,4 @@
-package co.emasters.challengejavafx.service;
+package co.emasters.challengejavafx.service.api;
 
 import co.emasters.challengejavafx.model.GitHubPullRequest;
 import co.emasters.challengejavafx.model.GitHubRepoPage;

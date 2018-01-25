@@ -4,6 +4,7 @@ import co.emasters.challengejavafx.model.GitHubPullRequest;
 import co.emasters.challengejavafx.model.GitHubRepoPage;
 import co.emasters.challengejavafx.model.GitHubRepository;
 import co.emasters.challengejavafx.persistence.HibernateUtils;
+import co.emasters.challengejavafx.service.api.GitHubService;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
