@@ -1,0 +1,62 @@
+apply plugin: 'java'
+apply plugin: 'maven'
+
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+
+	// Google Collections
+	compile 'com.google.guava:guava:23.0'
+	
+	//Spring
+	compile group: 'org.springframework', name: 'spring-context', version: '5.0.2.RELEASE'
+	compile group: 'org.springframework', name: 'spring-orm', version: '5.0.2.RELEASE'
+	
+	//Retrofit
+	compile 'com.squareup.retrofit2:retrofit:2.3.0'
+	compile group: 'com.squareup.retrofit2', name: 'converter-gson', version: '2.0.0-beta3'
+	
+	// Hibernate + DB Driver
+	compile group: 'org.hibernate', name: 'hibernate-entitymanager', version: '5.2.12.Final'
+	compile group: 'org.hibernate.javax.persistence', name: 'hibernate-jpa-2.1-api', version: '1.0.0.Final'
+	compile group: 'com.h2database', name: 'h2', version: '1.4.196'
+	
+	// Unit Tests
+	testCompile(group: "org.testfx", name: "testfx-core", version: "4.0.10-alpha")
+	testCompile(group: "org.testfx", name: "testfx-junit", version: "4.0.10-alpha")
+	testCompile(group: 'junit', name: 'junit', version: '4.12')
+}
+
+task sourcesJar(type: Jar, dependsOn: classes) {
+    classifier = 'sources'
+    from sourceSets.main.allSource
+}
+
+task javadocJar(type: Jar, dependsOn: javadoc) {
+    classifier = 'javadoc'
+    from javadoc.destinationDir
+}
+
+artifacts {
+    archives sourcesJar
+    archives javadocJar
+}
+
+/*install {
+  repositories.mavenInstaller {
+    pom.project {
+      licenses {
+        license {
+          name 'The Apache Software License, Version 2.0'
+          url 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+          distribution 'repo'
+        }
+      }
+    }
+  }
+}*/

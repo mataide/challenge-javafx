@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.garcia.github.form.pullrequests.PullRequestsController">
+   <children>
+      <BorderPane prefHeight="600.0" prefWidth="400.0">
+         <top>
+            <VBox prefHeight="122.0" prefWidth="445.0" BorderPane.alignment="CENTER">
+               <children>
+                  <Pane prefHeight="75.0" prefWidth="444.0" style="-fx-background-color: #336699;">
+                     <children>
+                        <Label fx:id="lblTitle" alignment="CENTER" prefHeight="75.0" prefWidth="400.0" text="REPO TITLE" textAlignment="CENTER" textFill="WHITE" textOverrun="CENTER_ELLIPSIS">
+                           <font>
+                              <Font size="18.0" />
+                           </font>
+                        </Label>
+                        <Button fx:id="btnBack" alignment="CENTER" contentDisplay="CENTER" layoutX="21.0" layoutY="13.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="50.0" style="-fx-background-color: #336699; -fx-border-color: #fff; -fx-border-radius: 5em; -fx-border-width: 2; -fx-alignment: center;" text="&lt;" textAlignment="CENTER" textFill="WHITE">
+                           <font>
+                              <Font size="24.0" />
+                           </font>
+                        </Button>
+                     </children>
+                  </Pane>
+                  <HBox alignment="CENTER" prefHeight="48.0" prefWidth="400.0" style="-fx-background-color: #d9d9d9;">
+                     <children>
+                        <Label fx:id="lblOpened" text="x" textFill="#ff8c00">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                        </Label>
+                        <Label text="/">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                        </Label>
+                        <Label fx:id="lblClosed" text="y">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                        </Label>
+                     </children>
+                     <opaqueInsets>
+                        <Insets />
+                     </opaqueInsets>
+                  </HBox>
+               </children>
+            </VBox>
+         </top>
+         <center>
+            <ListView fx:id="listView" prefHeight="278.0" prefWidth="444.0" BorderPane.alignment="CENTER" />
+         </center>
+      </BorderPane>
+   </children>
+</AnchorPane>

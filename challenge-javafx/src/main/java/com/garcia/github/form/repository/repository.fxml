@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.paint.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane prefHeight="115.0" prefWidth="370.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.garcia.github.form.repository.RepositoryController">
+   <children>
+      <HBox id="hboxContainer" fx:id="hboxContainer" prefHeight="115.0" prefWidth="370.0">
+         <children>
+            <VBox prefHeight="115.0" prefWidth="283.0">
+               <children>
+                  <Label id="lblTitle" fx:id="lblTitle" text="Title" textFill="#2e80dd">
+                     <font>
+                        <Font name="System Bold" size="14.0" />
+                     </font></Label>
+                  <Label id="lblDescription" fx:id="lblDescription" prefHeight="139.0" prefWidth="261.0" text="Description" wrapText="true">
+                     <font>
+                        <Font size="12.0" />
+                     </font></Label>
+                  <HBox prefHeight="100.0" prefWidth="200.0">
+                     <children>
+                        <ImageView fx:id="imgFork" fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+                           <HBox.margin>
+                              <Insets top="1.0" />
+                           </HBox.margin>
+                           <image>
+                              <Image url="@image/fork.png" />
+                           </image></ImageView>
+                        <Label id="lblForks" fx:id="lblForks" text="Forks">
+                           <font>
+                              <Font name="System Bold Italic" size="14.0" />
+                           </font></Label>
+                        <ImageView fx:id="imgStars" fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+                           <HBox.margin>
+                              <Insets left="4.0" />
+                           </HBox.margin>
+                           <image>
+                              <Image url="@image/star.png" />
+                           </image></ImageView>
+                        <Label id="lblStars" fx:id="lblStars" text="Stars">
+                           <HBox.margin>
+                              <Insets left="3.0" top="2.0" />
+                           </HBox.margin>
+                           <font>
+                              <Font name="System Bold Italic" size="14.0" />
+                           </font></Label>
+                     </children>
+                     <VBox.margin>
+                        <Insets top="2.0" />
+                     </VBox.margin>
+                  </HBox>
+               </children>
+               <HBox.margin>
+                  <Insets left="5.0" />
+               </HBox.margin>
+            </VBox>
+            <VBox prefHeight="115.0" prefWidth="143.0">
+               <children>
+                  <ImageView id="imgAvatar" fx:id="imgAvatar" fitHeight="64.0" fitWidth="64.0" pickOnBounds="true" preserveRatio="true">
+                     <VBox.margin>
+                        <Insets left="23.0" top="15.0" />
+                     </VBox.margin>
+                     <image>
+                        <Image url="@image/default_user.png" />
+                     </image></ImageView>
+                  <Label id="lblLogin" fx:id="lblLogin" prefHeight="17.0" prefWidth="109.0" style="-fx-alignment: center;" text="username" textAlignment="CENTER" textFill="#2e80dd">
+                     <VBox.margin>
+                        <Insets top="3.0" />
+                     </VBox.margin>
+                     <font>
+                        <Font size="14.0" />
+                     </font></Label>
+                  <Label id="lblName" fx:id="lblName" prefHeight="17.0" prefWidth="109.0" style="-fx-alignment: center;" text="name" textAlignment="CENTER" textFill="#bcbcbc">
+                     <VBox.margin>
+                        <Insets />
+                     </VBox.margin>
+                     <font>
+                        <Font name="System Italic" size="12.0" />
+                     </font></Label>
+               </children>
+            </VBox>
+         </children>
+      </HBox>
+   </children>
+</AnchorPane>
