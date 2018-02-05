@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.garcia.github.form.repositories.RepositoriesController">
+   <children>
+      <BorderPane prefHeight="600.0" prefWidth="400.0">
+         <top>
+            <VBox prefHeight="122.0" prefWidth="445.0" BorderPane.alignment="CENTER">
+               <children>
+                  <Pane prefHeight="75.0" prefWidth="444.0" style="-fx-background-color: #2e80dd;">
+                     <children>
+                        <Label alignment="CENTER" prefHeight="75.0" prefWidth="400.0" text="GITHUB JAVA POP" textAlignment="CENTER" textFill="WHITE" textOverrun="CENTER_ELLIPSIS">
+                           <font>
+                              <Font size="18.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </Pane>
+                  <HBox alignment="CENTER" prefHeight="40.0" prefWidth="444.0">
+                     <children>
+                        <Label text="Go to page (1/34):">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                        </Label>
+                        <ComboBox id="cmdPages" fx:id="cmbPages" prefHeight="27.0" prefWidth="71.0">
+                           <opaqueInsets>
+                              <Insets left="5.0" />
+                           </opaqueInsets>
+                           <HBox.margin>
+                              <Insets left="5.0" right="5.0" />
+                           </HBox.margin>
+                        </ComboBox>
+                        <Button fx:id="btnFind" mnemonicParsing="false" style="-fx-background-color: brown;" text="[ GO ]" textFill="WHITE" />
+                     </children>
+                     <opaqueInsets>
+                        <Insets />
+                     </opaqueInsets>
+                  </HBox>
+               </children>
+            </VBox>
+         </top>
+         <center>
+            <ListView fx:id="listView" prefHeight="278.0" prefWidth="444.0" BorderPane.alignment="CENTER" />
+         </center>
+      </BorderPane>
+   </children>
+</AnchorPane>
