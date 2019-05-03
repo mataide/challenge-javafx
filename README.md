@@ -49,4 +49,3 @@ If possible leave the repository public to facilitate inspection of the code.
 
 You should not try to make PUSH directly into THIS repository!
 
-xxxxxxxxxxcvssddwwqqqddd
